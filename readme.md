@@ -145,7 +145,7 @@ an HTML file for the UI/Presentation as a breach between the user and the applic
 
 ## Approach
 
-My first approach of the problem was gathering all the information possible, and localize what was the start point or input and the desired end point of the problem, after doing so, I segmented the process in a few chunks by execution time, basically ending up with the first chunk that would be handling how to the enter the data, the second one being how to organize this information to being able to work with it afterwards, the third one was the main functionality processing the data, and the last one was how to display the information.
+My first approach of the problem was gathering all the information possible, and localize what was the start point or input and the desired end point of the problem, after doing so, I segmented the process in a few chunks by execution time, basically ending up with the first chunk that would be handling how to the enter the data, the second one being how to organize this information to being able to work with it afterwards, the third one was the main functionality processing the data, and the last one was how to display the information. After acknowledge this I started to code each chunk and test each section, until the program was totally done, finally after having the application fully working, I proceeded to refactor it by splitting the main algorithm solve function in more simple and specific functions with different functionalities.
 
 ## Methodology
 
