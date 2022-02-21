@@ -6,7 +6,7 @@
 - [Instructions](#instructions)
 - [Solution](#solution)
 - [Approach](#approach)
-- [Metodology](#metodology)
+- [Metodology](#methodology)
 
 ## Description
 
