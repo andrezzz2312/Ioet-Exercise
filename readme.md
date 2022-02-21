@@ -14,13 +14,15 @@ JavaScript application to check how often employees have been coincided in the o
 
 ## Instructions
 
-In order to use the application, you only need to open the [Index.html](/index.html) by clicking on it.
+In order to use the application, you can download the whole folder and open the [Index.html](/index.html) by clicking on it, or access through this hiperlink [Ioet Exercise](https://ioetexercise.netlify.app/) to use the hosted version of the application.
 
-In this website you only need to create a **.txt** file with the following structure:
+In this application in order to use its functions you only need to create a _.txt_ file with the following structure:
 
 ```txt
 Employee name = First two letters of the Day, Starting Shift Hour - Ending Shift Hour
 ```
+
+_(also you can use the example.txt in the folder as a template)_
 
 for example:
 
