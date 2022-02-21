@@ -1,11 +1,13 @@
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 
-let solve = function (info) {
+// Function to split the input in manageable information
+let split = function (info) {
+  // Main array of objects to store the data
   let data = [];
-  let answer = {};
+  // Split by linebreaks
   const infoSplitted = info.split(/\r?\n/);
-  // First organize in a Javascript Object
+  // Organize in a Javascript Object
   for (let i = 0; i < infoSplitted.length; i++) {
     let dataTMP = infoSplitted[i].split('=');
     let employeeInfo = {};
@@ -19,8 +21,14 @@ let solve = function (info) {
     });
     data.push(employeeInfo);
   }
+  // Calling the Main solve algorithm
+  solve(data);
+};
 
-  // Main solve algorithm
+// Main solve algorithm
+let solve = function (data) {
+  // Main object where the answer will be stored
+  let answer = {};
   for (let i = 0; i < data.length; i++) {
     let employee = data[i];
 
@@ -45,19 +53,26 @@ let solve = function (info) {
       }
     }
   }
-  // Print the answer
+
+  // Calling print function
+  print(answer);
+};
+
+// Function to print the answer
+let print = function (answer) {
   for (key in answer) {
     console.log(key, '-', answer[key]);
     output.innerHTML += key + '-' + answer[key] + '<br></br>';
   }
 };
+
 // Event listener triggered by the file input
 input.addEventListener('change', () => {
   var fr = new FileReader();
+  fr.readAsText(input.files[0]);
   fr.onload = () => {
     const info = fr.result;
-    solve(info);
+    // Calling split function
+    split(info);
   };
-
-  fr.readAsText(input.files[0]);
 });

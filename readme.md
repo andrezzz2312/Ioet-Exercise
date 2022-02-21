@@ -47,15 +47,94 @@ Also it is possible to see this answer too from the console, by clicking the F12
 
 ## Solution
 
-My solution to the problem presented to make this application was creating a simple UI to attatch the corresponding _.txt_ file, after doing so, a web build-in API called "FileReader" will allow me to access to the information of the _.txt_ file.
+My solution to the problem presented to make this application was creating a simple UI to attatch the corresponding _.txt_ file, after doing so, with a little event listener, a web build-in API called "FileReader" will allow me to access to the information of the _.txt_ file.
 
-After having the information I proceeded to split it by linebreaks, so I would end up with an array of strings, that would be my employee's information.
+```javascript
+input.addEventListener('change', () => {
+  var fr = new FileReader();
+  fr.readAsText(input.files[0]);
+  fr.onload = () => {
+    const info = fr.result;
+    // Calling split function
+    split(info);
+  };
+});
+```
+
+After having the information I proceeded with a "split" function to split it by linebreaks, so I would end up with an array of strings, that would be my employee's information.
 
 I continued to split this information even further by using for loops and a map function, to end up with an array of objects showing the different days, start and end hours of their shifts.
 
-After storing all the pertinent information, I started to create a comparing system made out of for loops that basically will iterate across all the employees and all their work days, and compare them with the next employee in the list by also checking its own particular work days, this system after having all the information it needs compare if one employee works the same day as the other one who is compared with, and checks if its start hour is less than the other one end hour, and if its end hour is greater than its respective start hour. Also this system checks after the first loop across the employees if it is comparing with a employee that has been compared before, and it skips it leaving us with the actual solution.
+```javascript
+let split = function (info) {
+  // Main array of objects to store the  data
+  let data = [];
+  // Split by linebreaks
+  const infoSplitted = info.split(/\r?\n/);
+  // Organize in a Javascript Object
+  for (let i = 0; i < infoSplitted.length; i++) {
+    let dataTMP = infoSplitted[i].split('=');
+    let employeeInfo = {};
+    employeeInfo.name = dataTMP[0].toUpperCase();
+    employeeInfo.shifts = dataTMP[1].split(',').map((el) => {
+      return {
+        day: el.slice(0, 2),
+        start: el.slice(2, el.length).split('-')[0],
+        end: el.slice(2, el.length).split('-')[1],
+      };
+    });
+    data.push(employeeInfo);
+  }
+  // Calling the Main solve algorithm
+  solve(data);
+};
+```
 
-By doing so I end up with the information that I need, and the last step is concatenate it in a presentable way which I did it by storing each answer in an object, appending each couple of employees as an object property, and setting the amount of times they coincided as its values. And finally having this object I printed this values with a for loop both through console and UI.
+After storing all the pertinent information, I started to create a comparing system made out of for loops that basically will iterate across all the employees and all their work days, and compare them with the next employee in the list by also checking its own particular work days, this system after having all the information it needs compare if one employee works the same day as the other one who is compared with, and checks if its start hour is less than the other one end hour, and if its end hour is greater than its respective start hour. Also this system skips the employees that have been previously checked, leaving us with the desired answer.
+
+```javascript
+let solve = function (data) {
+  // Main object where the answer will be stored
+  let answer = {};
+  for (let i = 0; i < data.length; i++) {
+    let employee = data[i];
+
+    for (let o = 0; o < employee.shifts.length; o++) {
+      let schedule = employee.shifts[o];
+
+      for (let j = i + 1; j < data.length; j++) {
+        let employeeComp = data[j];
+
+        for (let u = 0; u < employeeComp.shifts.length; u++) {
+          let schedulecomp = employeeComp.shifts[u];
+          // Compare from both employees if they match day, start and end shift hours
+          if (
+            schedule.day == schedulecomp.day &&
+            schedule.start < schedulecomp.end &&
+            schedule.end > schedulecomp.start
+          ) {
+            let couple = employee.name + '-' + employeeComp.name;
+            answer[couple] = couple in answer ? answer[couple] + 1 : 1;
+          }
+        }
+      }
+    }
+  }
+  // Calling print function
+  print(answer);
+};
+```
+
+By doing so I end up with the information that I need, and the last step is concatenate it in a presentable way which I did it by creating a "print" function, storing each answer in an object, appending each couple of employees as an object property, and setting the amount of times they coincided as its values. And finally having this object, I printed the values with a for loop through both console and UI.
+
+```javascript
+let print = function (answer) {
+  for (key in answer) {
+    console.log(key, '-', answer[key]);
+    output.innerHTML += key + '-' + answer[key] + '<br></br>';
+  }
+};
+```
 
 ## Architecture
 
